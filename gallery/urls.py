@@ -18,6 +18,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url('^today/$',views.image,name='image'),
     url(r'^image/',include('image.urls'))
 ]
