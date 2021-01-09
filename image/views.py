@@ -7,7 +7,7 @@ def welcome(request):
     return render(request, 'welcome.html')
 def image(request):
     date = dt.date.today()
-
+    return render(request, 'all-images/today-images.html', {"date": date,})
     # FUNCTION TO CONVERT DATE OBJECT TO FIND EXACT DAY
     day = convert_dates(date)
     html = f'''
@@ -29,3 +29,19 @@ def convert_dates(dates):
     # Returning the actual day of the week
     day = days[day_number]
     return day
+
+def past_images(request, past_date):
+    
+    try:
+        # Converts data from the string Url
+        date = dt.datetime.strptime(past_date, '%Y-%m-%d').date()
+
+    except ValueError:
+        # Raise 404 error when ValueError is thrown
+        raise Http404()
+        assert False
+
+    if date == dt.date.today():
+        return redirect(image)
+
+    return render(request, 'all-news/past-image.html', {"date": date})
