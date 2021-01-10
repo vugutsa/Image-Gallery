@@ -1,5 +1,6 @@
 from django.test import TestCase
-from .models import Image,Location
+from .models import Image,Location,Category
+import datetime as dt
 # Create your tests here.
 
 class ImageTestClass(TestCase):
@@ -10,7 +11,7 @@ class ImageTestClass(TestCase):
         self.location.save_location()
 
         # Creating a new category and saving it
-        self.category = Category(id=1,name = 'Travel')
+        self.category = Category(id=1,name = 'Nature')
         self.category.save_category()
 
         self.new_image= Image(id=1, name='image', description='testing the image', location=self.location,category=self.category)
@@ -32,9 +33,11 @@ class ImageTestClass(TestCase):
         
     def test_update_image(self):
         self.new_image.save_image()
-        self.new_image.update_image(self.new_image.id, 'photos/test.jpg')
-        changed_img = Image.objects.filter(image='photos/test.jpg')
-        self.assertTrue(len(changed_img) 
+        self.new_image.update_image(self.new_image.id, 'image/test.jpg')
+        changed_img = Image.objects.filter(image='image/test.jpg')
+        self.assertTrue(len(changed_img) > 0)
+        
+
         
 class LocationTestClass(TestCase):
     
@@ -59,6 +62,12 @@ class LocationTestClass(TestCase):
         
     def test_update_location(self):
         self.location.save_location()
-        self.location.update_location(self.location.id, 'Naivasha')
-        changed_location = Location.objects.filter(name ='Naivasha')
-        self.assertTrue(len(changed_location) > 0)               
+        self.location.update_location(self.location.id, 'Mombasa')
+        changed_location = Location.objects.filter(name ='Mombasa')
+        self.assertTrue(len(changed_location) > 0)   
+        
+    def tearDown(self):
+        Image.objects.all().delete()
+        Category.objects.all().delete()
+        Location.objects.all().delete()   
+                       

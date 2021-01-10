@@ -3,16 +3,14 @@ import datetime as dt
 
 # Create your models here.
 class Image(models.Model):
-    name = models.CharField(max_length =100)
+    name = models.CharField(max_length =60)
     description = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     location = models.ForeignKey('Location', on_delete=models.CASCADE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     
-    
-class Meta:
-    ordering = ['Image'] ,
+
     
     def save_image(self):
         self.save()
@@ -27,9 +25,27 @@ class Meta:
     @classmethod
     def get_image_by_id(cls, id):
         image = cls.objects.filter(id=id).all()
-        return image  
+        return image 
+     
+     
+    @classmethod
+    def search_by_title(cls,search_term):
+        news = cls.objects.filter(title__icontains=search_term)
+        return image
     
-      
+    @classmethod
+    def search_by_category(cls, category):
+        images = cls.objects.filter(category__name__icontains=category)
+        return images
+     
+    @classmethod
+    def filter_by_location(cls, location):
+        image_location = Image.objects.filter(location__name=location).all()
+        return image_location
+  
+    def __str__(self):
+        return self.name 
+     
 class Location(models.Model):
     name = models.CharField(max_length=60)
     
