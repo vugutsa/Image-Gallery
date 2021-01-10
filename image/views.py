@@ -52,11 +52,22 @@ def past_images(request, past_date):
     return render(request, 'all-news/past-image.html', {"date": date,"image":image})
 
 
+def view_image(request,image_id):
+    '''
+    Method to get image by id
+    '''
+    try:
+        image = Image.objects.get(id =  image_id)
+    except DoesNotExist:
+        raise Http404()
+    return render(request, "photo/post.html", {"image":image})
+
+
 def search_results(request):
     
     if 'image' in request.GET and request.GET["image"]:
         search_term = request.GET.get("image")
-        searched_images = Image.search_by_title(search_term)
+        searched_images = Image.search_by_name(search_term)
         message = f"{search_term}"
 
         return render(request, 'all-images/search.html',{"message":message,"images": searched_images})
