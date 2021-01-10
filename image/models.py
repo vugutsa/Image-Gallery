@@ -9,6 +9,7 @@ class Image(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     location = models.ForeignKey('Location', on_delete=models.CASCADE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    Images_image = models.ImageField(upload_to = 'images/')
     
 
     
@@ -82,5 +83,9 @@ class Category(models.Model):
     @classmethod
     def delete_category(cls,category):
         cls.objects.filter(category=category).delete()
+    
+    def __str__(self):
+        return self.category
+    
 
   
