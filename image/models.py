@@ -1,13 +1,18 @@
 from django.db import models
+import datetime as dt
 
 # Create your models here.
 class Image(models.Model):
-    name = models.CharField(max_length =30)
+    name = models.CharField(max_length =100)
     description = models.TextField()
-    location = models.ForeignKey(Location, on_delete = models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    email = models.EmailField()
+    pub_date = models.DateTimeField(auto_now_add=True)
+    location = models.ForeignKey('Location', on_delete=models.CASCADE)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    
+    
+class Meta:
+    ordering = ['Image'] ,
     
     def save_image(self):
         self.save()
@@ -15,7 +20,7 @@ class Image(models.Model):
     def delete_image(self):
         self.dele
         
-        @classmethod
+    @classmethod
     def update_image(cls, id, value):
         cls.objects.filter(id=id).update(image=value)
     
@@ -25,9 +30,9 @@ class Image(models.Model):
         return image  
     
       
- class Location(models.Model): 
-    name = models.CharField(max_length=60)   
-
+class Location(models.Model):
+    name = models.CharField(max_length=60)
+    
     def save_location(self):
         self.save()
         
@@ -39,4 +44,27 @@ class Image(models.Model):
         cls.objects.filter(id=id).update(name = value)
         
     def __str__(self):
-        return self.name 
+        return self.name
+    
+class Category(models.Model):
+    category = models.CharField(max_length =100)
+
+    @classmethod
+    def get_all_categories(cls):
+        '''
+        Method to get all categories
+        '''
+        categories = cls.objects.all()
+        return categories
+
+    def save_category(self):
+        '''
+        Method to save category
+        '''
+        self.save()
+
+    @classmethod
+    def delete_category(cls,category):
+        cls.objects.filter(category=category).delete()
+
+  
