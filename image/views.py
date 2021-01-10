@@ -9,6 +9,22 @@ from .models import Image
 
 def welcome(request):
     return render(request, 'welcome.html')
+
+def index(request):
+    '''
+    Method to return all images, locations, categories
+    '''
+    images = Image.objects.all()
+    location = Location.objects.all()
+    categories = Category.get_all_categories()
+    context = {
+        "images":images,
+        "location":location,
+        "categorie": categories,
+    }
+    
+    return render(request, 'all-images/index.html', context)
+
 def image(request):
     date = dt.date.today()
     # image = Image.today_images()
@@ -60,7 +76,7 @@ def view_image(request,image_id):
         image = Image.objects.get(id =  image_id)
     except DoesNotExist:
         raise Http404()
-    return render(request, "photo/post.html", {"image":image})
+    return render(request, "all-images/view.html", {"image":image})
 
 
 def search_results(request):

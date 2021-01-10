@@ -4,7 +4,7 @@ import datetime as dt
 # Create your models here.
 class Image(models.Model):
     name = models.CharField(max_length =60)
-    description = models.TextField()
+    description = models.CharField(max_length =200)
     date = models.DateTimeField(auto_now_add=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     location = models.ForeignKey('Location', on_delete=models.CASCADE)
