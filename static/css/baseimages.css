@@ -1,22 +1,18 @@
 h1
 {
-  color: greenyellow;
+  color: blue;
 }
 body {
   background-color: grey;
+  font-family: 'Yeon Sung', cursive;
 }
 .thumbnails img:hover{
   opacity: 1;
-  /* transform: rotate3d(30deg); */
-  /* box-shadow: 0 0 7px rgba(0, 0, 0, .5) */
 }
-
 .thumbnails:hover img{
- 
-  opacity: .6;
-  /* transform: scale(.92) */
+  opacity: .4;
   -webkit-filter: sepia(0);
-filter: sepia(0);
+  filter: sepia(0);
 }
 .thumbnails img{
   transition: all .6s ease-in;
